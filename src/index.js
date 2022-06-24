@@ -4,6 +4,17 @@ const onClickAdd = () => {
   //テキストボックスの値を取得し、初期化する
   const inputText = document.getElementById("add-text").value;
   document.getElementById("add-text").value = "";
+
+  createIncompleteList(inputText); //未完了リストに追加する関数を呼び出し
+};
+
+//未完了リストから指定の要素を削除
+const deleteFromIncompleteList = (target) => {
+  document.getElementById("incomplete-list").removeChild(target);
+};
+
+//未完了リストに追加する関数
+const createIncompleteList = (text) => {
   //li生成
   const li = document.createElement("li");
   //div生成(同じクラス名をつける)
@@ -11,7 +22,7 @@ const onClickAdd = () => {
   div.className = "list-row";
   //pタグ生成
   const p = document.createElement("p");
-  p.innerText = inputText; //innerTextで要素を格納しinputTextの値を設定
+  p.innerText = text; //innerTextで要素を格納しtextの値を設定
   //buttonタグ生成（完了ボタン）=>押下時のイベント
   const completeButton = document.createElement("button");
   completeButton.innerText = "完了";
@@ -37,8 +48,8 @@ const onClickAdd = () => {
       document.getElementById("complete-list").removeChild(deleteTarget);
 
       //テキスト取得
-      //const text = backButton.parentNode.firstElementChild.innerText;
-      //console.log(text);
+      const text = backButton.parentNode.firstElementChild.innerText;
+      createIncompleteList(text);
     });
     //liタグの子要素にdivを設定
     li.appendChild(div);
@@ -65,11 +76,6 @@ const onClickAdd = () => {
   div.appendChild(deleteButton);
   //未完了リストに追加
   document.getElementById("incomplete-list").appendChild(li);
-};
-
-//未完了リストから指定の要素を削除
-const deleteFromIncompleteList = (target) => {
-  document.getElementById("incomplete-list").removeChild(target);
 };
 
 //id=add-buttonに対してクリックイベントを付与
